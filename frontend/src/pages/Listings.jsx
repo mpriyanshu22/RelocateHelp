@@ -3,6 +3,9 @@ import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Filter, Star, MapPin, Building, GraduationCap, HeartPulse } from 'lucide-react';
 
+// FIXED: Added dynamic backend base URL configuration
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Listings = () => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,10 +31,11 @@ const Listings = () => {
     setLoading(true);
     try {
       const queryParams = new URLSearchParams(filters).toString();
-      const res = await axios.get(`http://localhost:5000/api/listings?${queryParams}`);
+      // FIXED: Replaced hardcoded localhost string with dynamic API_BASE_URL endpoint
+      const res = await axios.get(`${API_BASE_URL}/api/listings?${queryParams}`);
       setListings(res.data);
     } catch (err) {
-      console.error(err);
+      console.error('Failed to fetch listings:', err);
     } finally {
       setLoading(false);
     }
@@ -134,7 +138,7 @@ const Listings = () => {
               {listings.map(listing => (
                 <Link key={listing._id} to={`/listing/${listing._id}`} className="card flex flex-col sm:flex-row group hover:-translate-y-1 transition-all duration-300">
                   <div className="w-full sm:w-48 h-48 sm:h-auto relative overflow-hidden">
-                    <img src={listing.imageUrl || 'https://via.placeholder.com/200'} alt={listing.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <img src={listing.imageUrl || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400'} alt={listing.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     <div className="absolute top-3 left-3 bg-white p-1.5 rounded-full shadow-md">
                       {getCategoryIcon(listing.category)}
                     </div>
@@ -145,7 +149,7 @@ const Listings = () => {
                         <h3 className="text-lg font-bold text-gray-900 line-clamp-1">{listing.title}</h3>
                         <div className="flex items-center bg-gray-100 px-2 py-1 rounded-md">
                           <Star className="h-4 w-4 text-accent fill-current" />
-                          <span className="ml-1 text-sm font-medium">{listing.averageRating}</span>
+                          <span className="ml-1 text-sm font-medium">{listing.averageRating || 0}</span>
                         </div>
                       </div>
                       <div className="flex items-center text-gray-500 text-sm mb-3">

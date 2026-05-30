@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Search, Map, ArrowRight } from 'lucide-react';
 
+// FIXED: Added dynamic backend base URL configuration
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Home = () => {
   const [cities, setCities] = useState([]);
   const [search, setSearch] = useState('');
@@ -11,7 +14,8 @@ const Home = () => {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/cities');
+        // FIXED: Replaced hardcoded localhost string with dynamic API_BASE_URL endpoint
+        const res = await axios.get(`${API_BASE_URL}/api/cities`);
         setCities(res.data);
       } catch (err) {
         console.error('Failed to fetch cities', err);
@@ -81,7 +85,7 @@ const Home = () => {
               className="group card relative aspect-[4/5] w-full rounded-2xl overflow-hidden block shadow-md transition-all duration-300 hover:shadow-xl"
             >
               <img
-                src={city.imageUrl || 'https://via.placeholder.com/400'}
+                src={city.imageUrl || 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=400'}
                 alt={city.name}
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />

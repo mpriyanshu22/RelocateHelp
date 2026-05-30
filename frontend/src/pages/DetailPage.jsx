@@ -2,7 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
-import { Star, MapPin, Mail, Phone, ExternalLink, Calendar, Bookmark, Heart, DollarSign } from 'lucide-react';
+import { Star, MapPin, Mail, Calendar, Heart, DollarSign } from 'lucide-react';
+
+// FIXED: Dynamic environment URL configuration
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const DetailPage = () => {
   const { id } = useParams();
@@ -30,14 +33,15 @@ const DetailPage = () => {
 
   const fetchData = async () => {
     try {
+      // FIXED: Switched endpoints from hardcoded localhost to API_BASE_URL variables
       const [listingRes, reviewRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/listings/${id}`),
-        axios.get(`http://localhost:5000/api/reviews/${id}`)
+        axios.get(`${API_BASE_URL}/api/listings/${id}`),
+        axios.get(`${API_BASE_URL}/api/reviews/${id}`)
       ]);
       setListing(listingRes.data);
       setReviews(reviewRes.data);
     } catch (err) {
-      console.error(err);
+      console.error("Error fetching data:", err);
     } finally {
       setLoading(false);
     }
@@ -49,14 +53,16 @@ const DetailPage = () => {
     if (!user) return setReviewError('You must be logged in to leave a review.');
 
     try {
-      await axios.post('http://localhost:5000/api/reviews', {
+      // FIXED: Switched endpoint to use dynamic variable
+      await axios.post(`${API_BASE_URL}/api/reviews`, {
         listingId: id,
         rating: Number(rating),
         comment
       }, { withCredentials: true });
+      
       setComment('');
       setRating(5);
-      fetchData(); // Refresh data
+      fetchData(); // Refresh data layout
     } catch (err) {
       setReviewError(err.response?.data?.error || 'Failed to submit review');
     }
@@ -65,7 +71,8 @@ const DetailPage = () => {
   const handleSaveToggle = async () => {
     if (!user) return alert('Please log in to save listings.');
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/save-listing', { listingId: id }, { withCredentials: true });
+      // FIXED: Switched endpoint to use dynamic variable
+      const res = await axios.post(`${API_BASE_URL}/api/auth/save-listing`, { listingId: id }, { withCredentials: true });
       setIsSaved(!isSaved);
       setUser(res.data);
     } catch (err) {
@@ -74,7 +81,7 @@ const DetailPage = () => {
   };
 
   if (loading) return <div className="flex justify-center py-20"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div></div>;
-  if (!listing) return <div className="text-center py-20">Listing not found</div>;
+  if (!listing) return <div className="text-center py-20 text-gray-500 font-medium">Listing not found</div>;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -82,7 +89,7 @@ const DetailPage = () => {
       {/* Listing Header */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8">
         <div className="h-64 md:h-96 relative">
-          <img src={listing.imageUrl || 'https://via.placeholder.com/1200'} alt={listing.title} className="w-full h-full object-cover" />
+          <img src={listing.imageUrl || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200'} alt={listing.title} className="w-full h-full object-cover" />
           <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wider text-gray-800 shadow-md">
             {listing.category}
           </div>
@@ -100,15 +107,16 @@ const DetailPage = () => {
                 <MapPin className="h-5 w-5 mr-1" />
                 {listing.location}
                 <span className="mx-2">•</span>
-                <Link to={`/city/${listing.cityId._id}`} className="text-primary hover:underline">{listing.cityId.name}</Link>
+                {/* FIXED: Protected deep references using optional chaining */}
+                <Link to={`/city/${listing.cityId?._id}`} className="text-primary hover:underline">{listing.cityId?.name || 'View City'}</Link>
               </div>
             </div>
             <div className="bg-blue-50 text-center p-4 rounded-xl min-w-[120px]">
               <div className="flex items-center justify-center text-2xl font-bold text-primary mb-1">
                 <Star className="h-6 w-6 text-accent fill-current mr-1" />
-                {listing.averageRating}
+                {listing.averageRating || 0}
               </div>
-              <div className="text-xs text-gray-500 uppercase font-semibold">{listing.totalReviews} Reviews</div>
+              <div className="text-xs text-gray-500 uppercase font-semibold">{listing.totalReviews || 0} Reviews</div>
             </div>
           </div>
 
@@ -124,7 +132,7 @@ const DetailPage = () => {
             </div>
             <div>
               <h3 className="font-semibold text-gray-900 mb-3 flex items-center"><Mail className="h-5 w-5 mr-1 text-gray-400" /> Contact Info</h3>
-              <p className="text-primary">{listing.contactDetails}</p>
+              <p className="text-primary font-medium">{listing.contactDetails || 'No contact details specified'}</p>
             </div>
           </div>
         </div>
@@ -183,14 +191,15 @@ const DetailPage = () => {
             <div key={review._id} className="border-b border-gray-100 pb-6 last:border-0 last:pb-0">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-3">
+                  {/* FIXED: Protected single-character avatar strings using optional chaining */}
                   <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
-                    {review.user?.name?.charAt(0).toUpperCase()}
+                    {review.user?.name ? review.user.name.charAt(0).toUpperCase() : 'U'}
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-900">{review.user?.name}</h4>
+                    <h4 className="font-bold text-gray-900">{review.user?.name || 'Anonymous'}</h4>
                     <div className="text-xs text-gray-500 flex items-center">
                       <Calendar className="h-3 w-3 mr-1" />
-                      {new Date(review.createdAt).toLocaleDateString()}
+                      {review.createdAt ? new Date(review.createdAt).toLocaleDateString() : 'Recent'}
                     </div>
                   </div>
                 </div>

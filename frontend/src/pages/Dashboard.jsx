@@ -27,10 +27,11 @@ const Dashboard = () => {
         {/* Profile Card */}
         <div className="col-span-1">
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center">
+            {/* FIXED: Added optional chaining and safe string fallback */}
             <div className="h-24 w-24 rounded-full bg-primary/10 text-primary flex items-center justify-center text-4xl font-bold mx-auto mb-4">
-              {user.name.charAt(0).toUpperCase()}
+              {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-1">{user.name}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-1">{user.name || 'User'}</h2>
             <div className="flex items-center justify-center text-gray-500 mb-4 gap-2">
               <Mail className="h-4 w-4" /> {user.email}
             </div>
@@ -72,6 +73,7 @@ const Dashboard = () => {
             </p>
           </div>
 
+          {/* Saved Listings Section */}
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
             <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
               <Star className="h-5 w-5 text-accent fill-current" /> Saved Listings
@@ -81,7 +83,7 @@ const Dashboard = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {user.savedListings.map(listing => (
                   <Link key={listing._id} to={`/listing/${listing._id}`} className="flex gap-4 p-3 border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors group">
-                    <img src={listing.imageUrl || 'https://via.placeholder.com/100'} alt={listing.title} className="w-20 h-20 rounded-lg object-cover" />
+                    <img src={listing.imageUrl || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=150'} alt={listing.title} className="w-20 h-20 rounded-lg object-cover" />
                     <div className="flex-1 flex flex-col justify-center">
                       <h4 className="font-bold text-gray-900 line-clamp-1 group-hover:text-primary transition-colors">{listing.title}</h4>
                       <div className="flex items-center text-xs text-gray-500 mt-1 mb-2">

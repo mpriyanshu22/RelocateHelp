@@ -11,23 +11,31 @@ const reviewRoutes = require('./routes/reviews');
 const app = express();
 
 // Middleware
+// ONLY CHANGED: Updated CORS to accept your live Vercel URL alongside localhost
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://relocate-help.vercel.app'
+];
+
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      return callback(new Error('Blocked by CORS policy'), false);
+    }
+    return callback(null, true);
+  },
   credentials: true
 }));
+
 app.use(express.json());
 app.use(cookieParser());
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/cities', cityRoutes);
 app.use('/api/listings', listingRoutes);
 app.use('/api/reviews', reviewRoutes);
-
-// Error Handling Middleware
-// app.use((err, req, res, next) => {
-//   console.error(err.stack);
-//   res.status(500).json({ error: 'Something went wrong!', details: err.message });
-// });
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI)
