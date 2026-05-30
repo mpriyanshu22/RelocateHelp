@@ -82,8 +82,8 @@ const Dashboard = () => {
             {user.savedListings && user.savedListings.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {user.savedListings.map(listing => (
-                  <Link key={listing._id} to={`/listing/${listing._id}`} className="flex gap-4 p-3 border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors group">
-                    <img src={listing.imageUrl || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=150'} alt={listing.title} className="w-20 h-20 rounded-lg object-cover" />
+                  <Link key={listing._id} to={`/listing/${listing._id}`} className="flex flex-col sm:flex-row gap-4 p-3 border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors group">
+                    <img src={listing.imageUrl || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=150'} alt={listing.title} className="w-full sm:w-20 h-32 sm:h-20 rounded-lg object-cover shrink-0" />
                     <div className="flex-1 flex flex-col justify-center">
                       <h4 className="font-bold text-gray-900 line-clamp-1 group-hover:text-primary transition-colors">{listing.title}</h4>
                       <div className="flex items-center text-xs text-gray-500 mt-1 mb-2">

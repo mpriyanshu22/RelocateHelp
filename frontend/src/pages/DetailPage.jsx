@@ -88,7 +88,7 @@ const DetailPage = () => {
 
       {/* Listing Header */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8">
-        <div className="h-64 md:h-96 relative">
+        <div className="h-48 sm:h-64 md:h-96 relative">
           <img src={listing.imageUrl || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200'} alt={listing.title} className="w-full h-full object-cover" />
           <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wider text-gray-800 shadow-md">
             {listing.category}
@@ -96,10 +96,10 @@ const DetailPage = () => {
         </div>
         <div className="p-8">
           <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-4">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-                {listing.title}
-                <button onClick={handleSaveToggle} className="text-gray-400 hover:text-red-500 transition-colors focus:outline-none" title={isSaved ? "Remove from saved" : "Save this listing"}>
+            <div className="flex-1">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 flex items-center flex-wrap gap-3">
+                <span className="break-words">{listing.title}</span>
+                <button onClick={handleSaveToggle} className="text-gray-400 hover:text-red-500 transition-colors focus:outline-none shrink-0" title={isSaved ? "Remove from saved" : "Save this listing"}>
                   <Heart className={`h-6 w-6 ${isSaved ? 'fill-red-500 text-red-500' : ''}`} />
                 </button>
               </h1>
@@ -150,15 +150,15 @@ const DetailPage = () => {
 
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-1">Rating</label>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-1 sm:gap-2">
                 {[1, 2, 3, 4, 5].map((num) => (
                   <button
                     key={num}
                     type="button"
                     onClick={() => setRating(num)}
-                    className={`p-2 rounded-full transition-colors ${rating >= num ? 'text-accent' : 'text-gray-300'}`}
+                    className={`p-1 sm:p-2 rounded-full transition-colors ${rating >= num ? 'text-accent' : 'text-gray-300'}`}
                   >
-                    <Star className={`h-8 w-8 ${rating >= num ? 'fill-current' : ''}`} />
+                    <Star className={`h-6 w-6 sm:h-8 sm:w-8 ${rating >= num ? 'fill-current' : ''}`} />
                   </button>
                 ))}
               </div>

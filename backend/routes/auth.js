@@ -40,6 +40,7 @@ router.post('/register', async (req, res) => {
       email: user.email,
       _id: user._id,
       role: user.role,
+      savedListings: [],
     }
     res.status(200).json({
       user: reply,
@@ -54,7 +55,7 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate('savedListings');
 
     if (!user) return res.status(400).json({ error: 'Invalid credentials' });
 
@@ -86,6 +87,7 @@ router.post('/login', async (req, res) => {
       email: user.email,
       role: user.role,
       _id: user._id,
+      savedListings: user.savedListings || [],
     }
     res.status(200).json({
       user: reply,

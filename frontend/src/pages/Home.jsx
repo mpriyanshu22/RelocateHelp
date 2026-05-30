@@ -39,25 +39,25 @@ const Home = () => {
           <img src="https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=2070" alt="Cityscape" className="w-full h-full object-cover" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
             Relocate with <span className="text-accent">Confidence</span>
           </h1>
-          <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto mb-10">
+          <p className="text-lg sm:text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto mb-10">
             Your one-stop solution to find housing, schools, and healthcare in your new city. We make moving seamless.
           </p>
 
-          <form onSubmit={handleSearch} className="max-w-2xl mx-auto flex bg-white rounded-full p-2 shadow-2xl">
-            <div className="flex-grow flex items-center pl-4">
-              <Search className="h-6 w-6 text-gray-400" />
+          <form onSubmit={handleSearch} className="max-w-2xl mx-auto flex flex-col sm:flex-row bg-white rounded-3xl sm:rounded-full p-2 shadow-2xl gap-2 sm:gap-0">
+            <div className="flex-grow flex items-center pl-4 bg-white rounded-full">
+              <Search className="h-5 w-5 sm:h-6 sm:w-6 text-gray-400 shrink-0" />
               <input
                 type="text"
                 placeholder="Search for housing, schools, doctors..."
-                className="w-full py-3 px-4 text-gray-900 bg-transparent border-none outline-none focus:ring-0"
+                className="w-full py-3 px-2 sm:px-4 text-gray-900 bg-transparent border-none outline-none focus:ring-0 text-sm sm:text-base"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
-            <button type="submit" className="bg-primary hover:bg-blue-600 text-white rounded-full px-8 py-3 font-semibold transition-colors flex items-center gap-2">
+            <button type="submit" className="bg-primary hover:bg-blue-600 text-white rounded-full px-8 py-3 font-semibold transition-colors flex items-center justify-center gap-2 w-full sm:w-auto">
               Search
             </button>
           </form>

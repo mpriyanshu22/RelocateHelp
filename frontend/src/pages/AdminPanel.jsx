@@ -63,7 +63,7 @@ const AdminPanel = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-200">
         <ShieldAlert className="h-8 w-8 text-accent" />
-        <h1 className="text-3xl font-bold text-gray-900">Admin Control Panel</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Admin Control Panel</h1>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

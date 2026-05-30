@@ -13,7 +13,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-gray-50 flex flex-col">
+        <div className="min-h-screen bg-gray-50 flex flex-col overflow-x-hidden">
           <Navbar />
           <main className="flex-grow">
             <Routes>

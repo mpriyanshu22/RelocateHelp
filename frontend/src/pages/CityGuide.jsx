@@ -48,8 +48,8 @@ const CityGuide = () => {
             <MapPin className="h-5 w-5" />
             <span className="font-medium tracking-wide uppercase text-sm">City Guide</span>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold mb-4 text-center">{city.name}</h1>
-          <p className="text-xl max-w-2xl text-center text-gray-200">{city.overview}</p>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-center">{city.name}</h1>
+          <p className="text-lg sm:text-xl max-w-2xl text-center text-gray-200">{city.overview}</p>
         </div>
       </div>
 

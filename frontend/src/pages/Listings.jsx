@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
-import { Filter, Star, MapPin, Building, GraduationCap, HeartPulse } from 'lucide-react';
+import { Filter, Star, MapPin, Building, GraduationCap, HeartPulse, ChevronDown, ChevronUp } from 'lucide-react';
 
 // FIXED: Added dynamic backend base URL configuration
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
@@ -22,6 +22,7 @@ const Listings = () => {
     minRating: '',
     sortBy: ''
   });
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   useEffect(() => {
     fetchListings();
@@ -60,12 +61,20 @@ const Listings = () => {
         
         {/* Filters Sidebar */}
         <div className="w-full md:w-64 flex-shrink-0">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 sticky top-24">
-            <div className="flex items-center gap-2 font-semibold text-lg mb-6 text-gray-800">
-              <Filter className="h-5 w-5 text-primary" /> Filters
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 md:sticky md:top-24">
+            <div className="flex items-center justify-between font-semibold text-lg mb-0 md:mb-6 text-gray-800">
+              <div className="flex items-center gap-2">
+                <Filter className="h-5 w-5 text-primary" /> Filters
+              </div>
+              <button 
+                className="md:hidden text-gray-500 hover:text-primary focus:outline-none"
+                onClick={() => setShowMobileFilters(!showMobileFilters)}
+              >
+                {showMobileFilters ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+              </button>
             </div>
             
-            <div className="space-y-6">
+            <div className={`space-y-6 mt-6 md:mt-0 ${showMobileFilters ? 'block' : 'hidden md:block'}`}>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
                 <input 
