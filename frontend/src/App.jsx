@@ -9,7 +9,8 @@ import CityGuide from './pages/CityGuide';
 import Listings from './pages/Listings';
 import DetailPage from './pages/DetailPage';
 import AdminPanel from './pages/AdminPanel';
-
+import dotenv from 'dotenv';
+dotenv.config();
 function App() {
   return (
     <AuthProvider>
