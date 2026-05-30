@@ -66,12 +66,12 @@ const Home = () => {
 
       {/* Popular Cities Section - Fixed Width Constraints */}
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
-        <div className="flex justify-between items-end mb-12">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 sm:gap-0 mb-12">
           <div>
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Explore Destinations</h2>
             <p className="text-gray-600 text-lg">Find comprehensive guides for top relocation cities.</p>
           </div>
-          <Link to="/listings" className="text-primary font-semibold hover:text-secondary flex items-center gap-1 group">
+          <Link to="/listings" className="text-primary font-semibold hover:text-secondary flex items-center gap-1 group shrink-0">
             View all services <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
