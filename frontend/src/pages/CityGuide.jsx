@@ -106,7 +106,7 @@ const CityGuide = () => {
 
           {/* Sidebar CTA Block */}
           <div>
-            <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 sticky top-24">
+            <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Ready to Relocate?</h3>
               <p className="text-gray-600 mb-6">Find the best housing, schools, and healthcare in {city.name} to make your move seamless.</p>
               

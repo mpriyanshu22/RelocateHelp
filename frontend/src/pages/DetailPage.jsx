@@ -97,18 +97,21 @@ const DetailPage = () => {
         <div className="p-8">
           <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-4">
             <div className="flex-1">
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 flex items-center flex-wrap gap-3">
-                <span className="break-words">{listing.title}</span>
-                <button onClick={handleSaveToggle} className="text-gray-400 hover:text-red-500 transition-colors focus:outline-none shrink-0" title={isSaved ? "Remove from saved" : "Save this listing"}>
-                  <Heart className={`h-6 w-6 ${isSaved ? 'fill-red-500 text-red-500' : ''}`} />
+              <div className="flex justify-between items-start gap-4 mb-2">
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 break-words flex-1">
+                  {listing.title}
+                </h1>
+                <button onClick={handleSaveToggle} className="text-gray-400 hover:text-red-500 transition-colors focus:outline-none shrink-0 mt-1" title={isSaved ? "Remove from saved" : "Save this listing"}>
+                  <Heart className={`h-6 w-6 sm:h-7 sm:w-7 ${isSaved ? 'fill-red-500 text-red-500' : ''}`} />
                 </button>
-              </h1>
-              <div className="flex items-center text-gray-500">
-                <MapPin className="h-5 w-5 mr-1" />
-                {listing.location}
-                <span className="mx-2">•</span>
-                {/* FIXED: Protected deep references using optional chaining */}
-                <Link to={`/city/${listing.cityId?._id}`} className="text-primary hover:underline">{listing.cityId?.name || 'View City'}</Link>
+              </div>
+              <div className="flex items-start text-gray-500">
+                <MapPin className="h-5 w-5 mr-1 shrink-0 mt-0.5" />
+                <span className="leading-relaxed">
+                  {listing.location}
+                  <span className="mx-2 inline-block">•</span>
+                  <Link to={`/city/${listing.cityId?._id}`} className="text-primary hover:underline whitespace-nowrap">{listing.cityId?.name || 'View City'}</Link>
+                </span>
               </div>
             </div>
             <div className="bg-blue-50 text-center p-4 rounded-xl min-w-[120px]">

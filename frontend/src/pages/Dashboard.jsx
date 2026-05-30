@@ -26,7 +26,7 @@ const Dashboard = () => {
         
         {/* Profile Card */}
         <div className="col-span-1">
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center">
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center max-w-sm mx-auto lg:max-w-none w-full">
             {/* FIXED: Added optional chaining and safe string fallback */}
             <div className="h-24 w-24 rounded-full bg-primary/10 text-primary flex items-center justify-center text-4xl font-bold mx-auto mb-4">
               {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
